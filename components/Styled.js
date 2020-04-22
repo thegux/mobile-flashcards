@@ -41,3 +41,16 @@ export const CardView = styled.View`
         border-radius: 2px;
         padding: 20px;
 `
+
+export const Input = styled.TextInput`
+        background-color: #FFFFFF;
+        width: 90%;
+        margin: 20px;
+        margin-top: 0;
+        padding: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border-radius: 3px;
+        border-width: 1px;
+        border-color: rgb(209, 216, 222);
+`

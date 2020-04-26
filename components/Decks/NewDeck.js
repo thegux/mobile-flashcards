@@ -1,22 +1,48 @@
-import React, { useState } from 'react'
-import { Text } from 'react-native'
+import React, {Component} from 'react'
 import {ContainerCentered, ButtonLightText, TitleText, PrettyButton, Input} from '../Styled'
 import { blue } from '../../utils/colors'
+import { createDeck } from '../../utils/api'
+import {connect} from 'react-redux'
+import {addDeck} from '../../actions/decks'
 
-function NewDeck(){
-    const {title, setTitle} = useState('')
+class NewDeck extends Component {
+
+    state = {
+      title: '',
+    }
+
+    handleTitleChange = (title) => {
+      this.setState(() => ({title}))
+    }
+
+    submit = () => {
+        this.props.navigation.navigate('Decks')
+        this.props.dispatch(addDeck(this.state.title))
+        createDeck(this.state.title)
+        this.setState(() => ({title: ''})) 
+    }
+
+      render() {
         return(
             <ContainerCentered>
                 <TitleText>What is the title of the new deck?</TitleText>
-                <Input placeholder="Deck's Title" value={title} onChangeText={setTitle}/>
+                <Input keyboardShouldPersistTaps='handled'
+                    placeholder="Deck's Title"
+                    value={this.state.title} 
+                    onChangeText={this.handleTitleChange}/>
 
                 <PrettyButton style={{backgroundColor: blue}}>
-                    <ButtonLightText>Create Deck</ButtonLightText>
+                    <ButtonLightText
+                        onPress={this.submit}>
+                        Create Deck
+                    </ButtonLightText>
                 </PrettyButton>
 
             </ContainerCentered>
         )
-    }
+      }
+}
 
 
-export default NewDeck
+
+export default connect()(NewDeck)

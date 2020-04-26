@@ -12,6 +12,9 @@ import Deck from './components/Decks/Deck'
 import NewCard from './components/Cards/NewCard'
 import Card from './components/Cards/Card'
 import {white, blue, gray, black} from './utils/colors'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import reducer from './reducers/decks'
 
 
 //Navigation
@@ -31,7 +34,7 @@ function CustomStatusBar ({backgroundColor, ...props}) {
 //Nesting Navigation
 function Decks() {
   return (
-    <Stack.Navigator initialRouteName="Decks" 
+    <Stack.Navigator initialRouteName="Decks"
                      screenOptions={{
                       headerStatusBarHeight: 0,
                       headerTintColor: black,
@@ -52,50 +55,52 @@ function Decks() {
 
 //Main Component handling Routes with Tabs
 export default function App() {
+
   return (
-    <View style={{flex: 1}}>
+    <Provider store={createStore(reducer)}>
+      <View style={{flex: 1}}>
 
-      <CustomStatusBar backgroundColor={blue}  barStyle='light-content'/>
+        <CustomStatusBar backgroundColor={blue}  barStyle='light-content'/>
 
-      <NavigationContainer>
+        <NavigationContainer>
 
-              <Tab.Navigator screenOptions={({route}) => ({
-                    tabBarIcon: ({size}) => {
-                      if(route.name === 'Decks'){
-                        return <Ionicons name='ios-albums' size={size} color={blue}/>
-                      } else if (route.name === 'New Deck') {
-                        return <Ionicons name='ios-add-circle' size={size} color={blue}/>
-                      }
-                    },
-                    navigationOptions: {
-                      header: null
-                    },
-                    tabBarOptions: {
-                      activeTintColor: Platform.OS === 'ios' ? blue : white,
-                      style: {
-                        height: 56,
-                        backgroundColor: blue,
-                        shadowRadius: 6,
-                        shadowOpacity: 1,
-                        shadowColor: 'rgba(0,0,0,0.24)',
-                        shadowOffset: {
-                            width: 0,
-                            height: 3
+                <Tab.Navigator screenOptions={({route}) => ({
+                      tabBarIcon: ({size}) => {
+                        if(route.name === 'Decks'){
+                          return <Ionicons name='ios-albums' size={size} color={blue}/>
+                        } else if (route.name === 'New Deck') {
+                          return <Ionicons name='ios-add-circle' size={size} color={blue}/>
+                        }
+                      },
+                      navigationOptions: {
+                        header: null
+                      },
+                      tabBarOptions: {
+                        activeTintColor: Platform.OS === 'ios' ? blue : white,
+                        style: {
+                          height: 56,
+                          backgroundColor: blue,
+                          shadowRadius: 6,
+                          shadowOpacity: 1,
+                          shadowColor: 'rgba(0,0,0,0.24)',
+                          shadowOffset: {
+                              width: 0,
+                              height: 3
+                          }
                         }
                       }
-                    }
-                  })}
-                  >
+                    })}
+                    >
 
-                <Tab.Screen name="Decks" component={Decks} />
-                <Tab.Screen name="New Deck" component={NewDeck} />
+                  <Tab.Screen name="Decks" component={Decks}/>
+                  <Tab.Screen name="New Deck" component={NewDeck}/>
 
-              </Tab.Navigator>
+                </Tab.Navigator>
 
-      </NavigationContainer>
+        </NavigationContainer>
 
-    </View>
+      </View>
+      
+      </Provider>
   );
 }
-
-

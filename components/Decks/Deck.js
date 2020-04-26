@@ -3,29 +3,43 @@ import { Text } from 'react-native'
 import TextButton from '../BaseComponents/TextButton'
 import {TitleText, ContainerCentered, PrettyButton, ButtonLightText} from '../Styled'
 import { blue } from '../../utils/colors'
+import {deleteDeck} from '../../utils/api'
+import { connect } from 'react-redux'
+import {removeDeck} from '../../actions/decks'
 
-class Deck extends Component {
-    render() {
+function Deck (props) {
+
+        const {deckTitle, questions} = props.route.params
+        const amount = questions.length
         return (
             <ContainerCentered>
 
-                <TitleText>Deck Title</TitleText>
-                
-                <Text>3 Questions</Text>
+                <TitleText>{deckTitle}</TitleText>
 
-                <PrettyButton style={{backgroundColor: blue}} onPress={() => this.props.navigation.navigate('New Card')}>
+                <Text>{amount === 1 ? `${amount} question` : `${amount} questions`}</Text>
+
+                <PrettyButton style={{backgroundColor: blue}}
+                              onPress={() => props.navigation
+                                        .navigate('New Card', {deckTitle: deckTitle})}>
                     <ButtonLightText>Add Card</ButtonLightText>
                 </PrettyButton>
 
-                <PrettyButton style={{backgroundColor: blue}} onPress={() => this.props.navigation.navigate('Card')}>
+                <PrettyButton style={{backgroundColor: blue}} onPress={() => props.navigation.navigate('Card')}>
                     <ButtonLightText>Start Quiz</ButtonLightText>
                 </PrettyButton>
-                
-                <TextButton>Delete Deck</TextButton>
-            
+
+                <TextButton onPress={() => remove(props.navigation, props.dispatch, deckTitle)} >Delete Deck</TextButton>
+
             </ContainerCentered>
         )
-    }
+
 }
 
-export default Deck
+
+function remove(navigation, dispatch, deckTitle){
+    dispatch(removeDeck(deckTitle))
+    deleteDeck(deckTitle)
+    navigation.navigate('Decks')
+}
+
+export default connect()(Deck)

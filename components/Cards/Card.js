@@ -1,28 +1,26 @@
-import React, { Component } from 'react'
-import { Text } from 'react-native'
+import React, {useState} from 'react'
+import TextButton from '../BaseComponents/TextButton'
 import { ContainerCentered, ButtonLightText, CardView, TitleText, PrettyButton } from '../Styled'
+import {blue} from '../../utils/colors'
 
-export default class Card extends Component {
-    render () {
-        return (
-            <ContainerCentered>
+export default function Card(props) {
+      const [answer, useAnswer] = useState(false)
+          return (
 
                 <CardView>
-                    <TitleText>Question</TitleText>
 
-                    <Text style={{textAlign: 'center'}}>Answer</Text>
+                    <TitleText>{!answer ? props.question : props.answer}</TitleText>
+                    {!answer && <TextButton onPress={() => useAnswer(true)} style={{textAlign: 'center'}}>Answer</TextButton>}
 
-                    <PrettyButton style={{backgroundColor: '#013220'}}>
-                        <ButtonLightText>Got it</ButtonLightText>
+                    <PrettyButton onPress={() => props.updateState('Right')} style={{backgroundColor: blue}}>
+                        <ButtonLightText>Correct</ButtonLightText>
                     </PrettyButton>
 
-                    <PrettyButton style={{backgroundColor: '#8b2000', marginTop: 10}}>
-                        <ButtonLightText>Darn it</ButtonLightText>
+                    <PrettyButton onPress={() => props.updateState('Wrong')} style={{backgroundColor: '#993399', marginTop: 10}}>
+                        <ButtonLightText>Incorrect</ButtonLightText>
                     </PrettyButton>
 
                 </CardView>
 
-            </ContainerCentered>
         )
-    }
-}
+  }

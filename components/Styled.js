@@ -4,38 +4,36 @@ export const ContainerCentered = styled.View`
         display:flex;
         flex: 1;
         flex-direction: column;
-        justify-content: center;
+        background: white;
+        justify-content: flex-end;
         padding: 20px;
-        align-items:center;
+        padding-top: 0;
 `
 
 export const TitleText = styled.Text`
-        font-size: 30px;
-        margin-bottom: 20px;
+        font-size: 24px;
         color: black;
-        text-align: center;
 `
 
 export const PrettyButton = styled.TouchableOpacity`
-        padding: 10px 20px 10px;
+        padding: 15px 20px 15px;
         margin-top: 20px;
-        min-width: 80%;
+        min-width: 100%;
         color: #FFFFFF;
-        border: 4px;
-        border-color: white;
-        border-radius: 10px;
+        border: none;
+        border-radius: 5px;
 `
 export const ButtonLightText = styled.Text`
         color: #FFFFFF;
         font-size: 14px;
-        text-align: center; 
+        text-align: center;
 `
 
 
 export const CardView = styled.View`
         background-color: white;
-        shadowColor: rgb(209, 216, 222);
-        shadowOffset: 3px;
+        shadow-color: rgb(209, 216, 222);
+        shadow-offset: 3px;
         height: 50%;
         width: 90%;
         border-radius: 2px;
@@ -44,9 +42,8 @@ export const CardView = styled.View`
 
 export const Input = styled.TextInput`
         background-color: #FFFFFF;
-        width: 90%;
-        margin: 20px;
-        margin-top: 0;
+        width: 100%;
+        margin: 5% 0 5%;
         padding: 20px;
         padding-bottom: 10px;
         padding-top: 10px;

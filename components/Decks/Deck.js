@@ -4,42 +4,66 @@ import TextButton from '../BaseComponents/TextButton'
 import {TitleText, ContainerCentered, PrettyButton, ButtonLightText} from '../Styled'
 import { blue } from '../../utils/colors'
 import {deleteDeck} from '../../utils/api'
+import { removeDeck } from '../../actions/decks'
 import { connect } from 'react-redux'
-import {removeDeck} from '../../actions/decks'
+import ErrorBoundary from '../ErrorHandling/ErrorBoundary'
 
-function Deck (props) {
+class Deck extends Component {
 
-        const {deckTitle, questions} = props.route.params
-        const amount = questions.length
+    shouldComponentUpdate(nextProps){
+        return nextProps.deck !== undefined && nextProps.deck !== {}
+    }
+
+    remove = (deckTitle) => {
+        this.props.dispatch(removeDeck(deckTitle))
+        deleteDeck(deckTitle)
+        this.props.navigation.navigate('Decks')
+    }
+
+    render(){
+        const deckTitle = this.props.deck.title
+        const amount = this.props.deck.questions.length
+        const questions = this.props.deck.questions
+
         return (
+          <ErrorBoundary>
             <ContainerCentered>
 
                 <TitleText>{deckTitle}</TitleText>
 
-                <Text>{amount === 1 ? `${amount} question` : `${amount} questions`}</Text>
+                <Text>{amount === 1 ? `${amount} card` : `${amount} cards`}</Text>
 
                 <PrettyButton style={{backgroundColor: blue}}
-                              onPress={() => props.navigation
+                              onPress={() => this.props.navigation
                                         .navigate('New Card', {deckTitle: deckTitle})}>
                     <ButtonLightText>Add Card</ButtonLightText>
                 </PrettyButton>
 
-                <PrettyButton style={{backgroundColor: blue}} onPress={() => props.navigation.navigate('Card')}>
+                <PrettyButton style={{backgroundColor: blue}}
+                              onPress={() => this.props.navigation.navigate('Quiz', {questions: questions})}>
                     <ButtonLightText>Start Quiz</ButtonLightText>
                 </PrettyButton>
 
-                <TextButton onPress={() => remove(props.navigation, props.dispatch, deckTitle)} >Delete Deck</TextButton>
+                <TextButton onPress={() => this.remove(deckTitle)} >Delete Deck</TextButton>
 
             </ContainerCentered>
+          </ErrorBoundary>
         )
+    }
 
 }
 
 
-function remove(navigation, dispatch, deckTitle){
-    dispatch(removeDeck(deckTitle))
-    deleteDeck(deckTitle)
-    navigation.navigate('Decks')
+
+
+function mapStateToProps(decks, props){
+    const deckTitle = props.route.params.deckTitle
+    const deck = Object.keys(decks).map((d) => decks[d]).filter((d) => d.title === deckTitle)[0]
+
+    return{
+        props,
+        deck,
+    }
 }
 
-export default connect()(Deck)
+export default connect(mapStateToProps)(Deck)

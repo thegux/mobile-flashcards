@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Image, StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Platform} from 'react-native'
 import {ContainerCentered, ButtonLightText, TitleText, PrettyButton, Input} from '../Styled'
 import { blue } from '../../utils/colors'
 import { createCard } from '../../utils/api'
@@ -6,7 +7,7 @@ import {connect} from 'react-redux'
 import {addCard} from '../../actions/decks'
 
 class NewCard extends Component {
-    
+
     state={
         question:'',
         answer: '',
@@ -15,7 +16,7 @@ class NewCard extends Component {
     handleQuestionChange = (question) => {
         this.setState(() => ({question}))
     }
-    
+
     handleAnswerChange = (answer) => {
         this.setState(() => ({answer}))
     }
@@ -27,21 +28,48 @@ class NewCard extends Component {
         this.props.dispatch(addCard({title, question, answer}))
         createCard({title, question, answer})
     }
-    
+
 
     render() {
         return(
+
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+          >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
                 <ContainerCentered>
-                    <TitleText>New Question</TitleText>
+
+                    <TitleText>New Card</TitleText>
+
                     <Input placeholder="Question" value={this.state.question} onChangeText={this.handleQuestionChange}/>
                     <Input placeholder="Answer" value={this.state.answer} onChangeText={this.handleAnswerChange} />
+
                     <PrettyButton style={{backgroundColor: blue}}>
                         <ButtonLightText onPress={this.create}>Create Question</ButtonLightText>
                     </PrettyButton>
+
                 </ContainerCentered>
-            )
+
+
+                </TouchableWithoutFeedback>
+
+          </KeyboardAvoidingView>
+        )
     }
 }
 
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    width: '100%',
+    height: 250,
+    resizeMode: 'stretch'
+  }
+});
 
 export default connect()(NewCard)

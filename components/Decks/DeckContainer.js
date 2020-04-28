@@ -3,7 +3,9 @@ import { View, Text, FlatList } from 'react-native'
 import ListItemCentered from '../BaseComponents/ListItemCentered'
 import {fetchDecks, clearAsyncStorage} from '../../utils/api'
 import {connect} from 'react-redux'
+import {ContainerCentered} from '../Styled'
 import {receiveDecks} from '../../actions/decks'
+import ErrorBoundary from '../ErrorHandling/ErrorBoundary'
 
 class DeckContainer extends Component {
 
@@ -23,21 +25,31 @@ class DeckContainer extends Component {
     }
 
     render(){
-      const {decks} = this.props;
+      const {decksArray} = this.props;
         return(
-            <View>
-               <FlatList 
-                         data={decks}
+              <ErrorBoundary>
+                  <ContainerCentered>
+
+               <FlatList
+                         data={decksArray}
                          renderItem={this.renderDecks}
                          keyExtractor={(item, index) => index.toString()}/>
-            </View>
+                </ContainerCentered>
+              </ErrorBoundary>
+
         )
     }
 }
 
 function mapStateToProps(decks){
-    return{
-        decks
+  let decksArray
+  {decks && decks !== undefined
+    ? decksArray = Object.keys(decks).map((p) => decks[p])
+    : decksArray = []
+  }
+
+      return{
+        decksArray
     }
 }
 

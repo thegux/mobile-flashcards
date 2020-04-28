@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Image, StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Platform} from 'react-native'
 import {ContainerCentered, ButtonLightText, TitleText, PrettyButton, Input} from '../Styled'
 import { blue } from '../../utils/colors'
 import { createDeck } from '../../utils/api'
@@ -16,19 +17,27 @@ class NewDeck extends Component {
     }
 
     submit = () => {
-        this.props.navigation.navigate('Decks')
+        this.props.navigation.navigate('Deck', {deckTitle: this.state.title})
         this.props.dispatch(addDeck(this.state.title))
         createDeck(this.state.title)
-        this.setState(() => ({title: ''})) 
+        this.setState(() => ({title: ''}))
     }
 
       render() {
         return(
-            <ContainerCentered>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={styles.container}
+          >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <ContainerCentered>
+                <Image style={styles.image} source={require('../../drawables/newDeck.png')}/>
+
                 <TitleText>What is the title of the new deck?</TitleText>
+
                 <Input keyboardShouldPersistTaps='handled'
                     placeholder="Deck's Title"
-                    value={this.state.title} 
+                    value={this.state.title}
                     onChangeText={this.handleTitleChange}/>
 
                 <PrettyButton style={{backgroundColor: blue}}>
@@ -37,12 +46,23 @@ class NewDeck extends Component {
                         Create Deck
                     </ButtonLightText>
                 </PrettyButton>
+                </ContainerCentered>
 
-            </ContainerCentered>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         )
       }
 }
 
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    width: '100%',
+    height: 250,
+    resizeMode: 'stretch'
+  }
+});
 
 export default connect()(NewDeck)

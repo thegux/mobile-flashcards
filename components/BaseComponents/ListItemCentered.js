@@ -7,24 +7,19 @@ export default function ListItemCentered({name, amount, onPress, style={}}){
     return (
         <TouchableOpacity onPress={onPress} style={styles.listItemCentered}>
             <TitleText>{name}</TitleText>
-            <Text>{amount} cards</Text>
+            <Text>{amount === 1 ? `${amount} card` : `${amount} cards` }</Text>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     listItemCentered: {
-        padding: 20,
-        paddingTop: 40,
-        paddingBottom: 40,
-        flexDirection: 'column',
-        justifyContent: "center",
-        alignItems:'center',
-        textAlign: 'center',
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: 'center',
         color: blue,
+        padding: 20,
         borderBottomWidth: 1,
         borderBottomColor: gray,
     },
 })
-
-

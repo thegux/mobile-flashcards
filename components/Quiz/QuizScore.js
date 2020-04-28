@@ -6,14 +6,17 @@ import { StackActions } from '@react-navigation/native';
 
 
 export default function QuizScore(props){
-    console.log(props.status)
+
     return(
       <ContainerCentered>
         <TitleText>{props.status ? 'Congrats!!!' : 'Keep trying! You can do it!'}</TitleText>
-        <TitleText>{props.score}</TitleText>
+        
+        <TitleText>Score: {props.score}</TitleText>
+
         {props.status ?
             <Image style={styles.win} source={require('../../drawables/win.png')}/>
         :   <Image style={styles.lose} source={require('../../drawables/lose.png')}/>}
+
 
         <PrettyButton style={{backgroundColor: blue}}
                       onPress={() => props.restartQuiz()}>

@@ -3,6 +3,7 @@ import {View, Text} from 'react-native'
 import Card from '../Cards/Card'
 import debounce from 'debounce'
 import QuizScore from './QuizScore'
+import {clearLocalNotifications, setLocalNotification} from '../../utils/helpers'
 
 export default class Quiz extends Component {
 
@@ -37,6 +38,7 @@ export default class Quiz extends Component {
   }
 
   goToResult(){
+    clearLocalNotifications().then(setLocalNotification())
     this.setState((prevState) => ({result: true}))
     this.props.navigation.setOptions({ title: 'Result' })
     this.forceUpdate();
@@ -45,7 +47,7 @@ export default class Quiz extends Component {
   restartQuiz = () => {
     const total = this.props.route.params.questions.length
     this.setState(() => ({n:1, result: false, score: 0}))
-    this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+    this.props.navigation.setOptions({ title: `1/${total}` })
     this.forceUpdate()
   }
 
@@ -55,12 +57,11 @@ export default class Quiz extends Component {
       case 'Right':
         this.setState((prevState) => ({score: prevState.score + 1}))
         this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+        this.forceUpdate();
         break;
       case 'Wrong':
-        {this.state.score > 0 &&
-        this.setState((prevState) => ({score: prevState.score - 1}))
-        }
         this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+        this.forceUpdate();
         break
       default:
         this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
@@ -74,6 +75,7 @@ export default class Quiz extends Component {
     const status = this.state.score > (total/2)
 
       if(!this.state.result){
+       
       return (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <Card question={questions[position].question}

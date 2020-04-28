@@ -12,11 +12,11 @@ export default function Card(props) {
                     <TitleText>{!answer ? props.question : props.answer}</TitleText>
                     {!answer && <TextButton onPress={() => useAnswer(true)} style={{textAlign: 'center'}}>Answer</TextButton>}
 
-                    <PrettyButton onPress={() => props.updateState('Right')} style={{backgroundColor: blue}}>
+                    <PrettyButton onPress={() => {props.updateState('Right'); useAnswer(false)}} style={{backgroundColor: blue}}>
                         <ButtonLightText>Correct</ButtonLightText>
                     </PrettyButton>
 
-                    <PrettyButton onPress={() => props.updateState('Wrong')} style={{backgroundColor: '#993399', marginTop: 10}}>
+                    <PrettyButton onPress={() => {props.updateState('Wrong'); useAnswer(false)}} style={{backgroundColor: '#993399', marginTop: 10}}>
                         <ButtonLightText>Incorrect</ButtonLightText>
                     </PrettyButton>
 

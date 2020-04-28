@@ -39,9 +39,10 @@ class Deck extends Component {
                     <ButtonLightText>Add Card</ButtonLightText>
                 </PrettyButton>
 
-                <PrettyButton style={{backgroundColor: blue}}
+                <PrettyButton disabled={amount < 1}
+                              style={{backgroundColor: blue}}
                               onPress={() => this.props.navigation.navigate('Quiz', {questions: questions})}>
-                    <ButtonLightText>Start Quiz</ButtonLightText>
+                    <ButtonLightText>{amount < 1 ? 'No questions to start quiz' : 'Start Quiz'}</ButtonLightText>
                 </PrettyButton>
 
                 <TextButton onPress={() => this.remove(deckTitle)} >Delete Deck</TextButton>

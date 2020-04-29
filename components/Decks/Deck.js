@@ -26,7 +26,9 @@ class Deck extends Component {
         const questions = this.props.deck.questions
 
         return (
+
           <ErrorBoundary>
+
             <ContainerCentered>
 
                 <TitleText>{deckTitle}</TitleText>
@@ -48,6 +50,7 @@ class Deck extends Component {
                 <TextButton onPress={() => this.remove(deckTitle)} >Delete Deck</TextButton>
 
             </ContainerCentered>
+            
           </ErrorBoundary>
         )
     }

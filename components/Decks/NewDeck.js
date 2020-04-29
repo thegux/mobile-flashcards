@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-import {Image, StyleSheet, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, Platform} from 'react-native'
-import {ContainerCentered, ButtonLightText, TitleText, PrettyButton, Input} from '../Styled'
+import { Image, StyleSheet, KeyboardAvoidingView,
+         Keyboard, TouchableWithoutFeedback, Platform } from 'react-native'
+import { ContainerCentered, ButtonLightText, TitleText,
+        PrettyButton, Input } from '../Styled'
 import { blue } from '../../utils/colors'
 import { createDeck } from '../../utils/api'
-import {connect} from 'react-redux'
-import {addDeck} from '../../actions/decks'
+import { connect } from 'react-redux'
+import { addDeck } from '../../actions/decks'
 
 class NewDeck extends Component {
 
@@ -24,32 +26,38 @@ class NewDeck extends Component {
     }
 
       render() {
+
         return(
+
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={styles.container}
-          >
+            style={styles.container}>
+
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
                 <ContainerCentered>
-                <Image style={styles.image} source={require('../../drawables/newDeck.png')}/>
 
-                <TitleText>What is the title of the new deck?</TitleText>
+                  <Image style={styles.image} source={require('../../drawables/newDeck.png')}/>
 
-                <Input keyboardShouldPersistTaps='handled'
-                    placeholder="Deck's Title"
-                    value={this.state.title}
-                    onChangeText={this.handleTitleChange}/>
+                  <TitleText>What is the title of the new deck?</TitleText>
 
-                <PrettyButton style={{backgroundColor: blue}}>
-                    <ButtonLightText
-                        onPress={this.submit}>
-                        Create Deck
-                    </ButtonLightText>
-                </PrettyButton>
+                  <Input keyboardShouldPersistTaps='handled'
+                      placeholder="Deck's Title"
+                      value={this.state.title}
+                      onChangeText={this.handleTitleChange}/>
+
+                  <PrettyButton style={{backgroundColor: blue}}>
+                      <ButtonLightText
+                          onPress={this.submit}>
+                          Create Deck
+                      </ButtonLightText>
+                  </PrettyButton>
+
                 </ContainerCentered>
 
-                </TouchableWithoutFeedback>
-            </KeyboardAvoidingView>
+            </TouchableWithoutFeedback>
+
+          </KeyboardAvoidingView>
         )
       }
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import ListItemCentered from '../BaseComponents/ListItemCentered'
-import {fetchDecks, clearAsyncStorage} from '../../utils/api'
-import {connect} from 'react-redux'
-import {ContainerCentered} from '../Styled'
-import {receiveDecks} from '../../actions/decks'
+import { fetchDecks } from '../../utils/api'
+import { connect } from 'react-redux'
+import { ContainerCentered } from '../Styled'
+import { receiveDecks } from '../../actions/decks'
 import ErrorBoundary from '../ErrorHandling/ErrorBoundary'
 
 class DeckContainer extends Component {
@@ -25,16 +25,21 @@ class DeckContainer extends Component {
     }
 
     render(){
+
       const {decksArray} = this.props;
+
         return(
               <ErrorBoundary>
-                  <ContainerCentered>
 
-               <FlatList
-                         data={decksArray}
-                         renderItem={this.renderDecks}
-                         keyExtractor={(item, index) => index.toString()}/>
+                <ContainerCentered>
+
+                  <FlatList
+                            data={decksArray}
+                            renderItem={this.renderDecks}
+                            keyExtractor={(item, index) => index.toString()}/>
+
                 </ContainerCentered>
+
               </ErrorBoundary>
 
         )

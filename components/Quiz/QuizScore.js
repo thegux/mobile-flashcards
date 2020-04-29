@@ -1,6 +1,6 @@
 import React from 'react'
-import {View, Text,StyleSheet, Image} from 'react-native'
-import {ContainerCentered, TitleText, PrettyButton, ButtonLightText } from '../Styled'
+import { StyleSheet, Image } from 'react-native'
+import { ContainerCentered, TitleText, PrettyButton, ButtonLightText } from '../Styled'
 import { blue } from '../../utils/colors'
 import { StackActions } from '@react-navigation/native';
 
@@ -8,7 +8,9 @@ import { StackActions } from '@react-navigation/native';
 export default function QuizScore(props){
 
     return(
+
       <ContainerCentered>
+         
         <TitleText>{props.status ? 'Congrats!!!' : 'Keep trying! You can do it!'}</TitleText>
         
         <TitleText>Score: {props.score}</TitleText>

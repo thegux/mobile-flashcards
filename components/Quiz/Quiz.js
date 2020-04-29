@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {View, Text} from 'react-native'
+import React, { Component } from 'react'
+import { View } from 'react-native'
 import Card from '../Cards/Card'
 import debounce from 'debounce'
 import QuizScore from './QuizScore'
-import {clearLocalNotifications, setLocalNotification} from '../../utils/helpers'
+import { clearLocalNotifications, setLocalNotification } from '../../utils/helpers'
 
 export default class Quiz extends Component {
 
@@ -12,25 +12,25 @@ export default class Quiz extends Component {
     this.handleAnswer = debounce(this.handleAnswer.bind(this), 20);
     this.goToResult = debounce(this.goToResult.bind(this), 30);
     this.state={
-      n: 1,
+      questionAt: 1,
       score: 0,
       result: false,
     }
   }
 
   shouldComponentUpdate(nextProps){
-    return this.state.n + 1 < nextProps.route.params.questions.length
+    return this.state.questionAt + 1 < nextProps.route.params.questions.length
   }
 
   componentDidMount() {
     const total = this.props.route.params.questions.length
-    this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+    this.props.navigation.setOptions({ title: `${this.state.questionAt}/${total}` })
   }
 
   updateState = (type) => {
     const total = this.props.route.params.questions.length
-    if(this.state.n < total){
-      this.setState((prevState) => ({n: prevState.n + 1}))
+    if(this.state.questionAt < total){
+      this.setState((prevState) => ({questionAt: prevState.questionAt + 1}))
     } else {
       this.goToResult()
     }
@@ -38,7 +38,7 @@ export default class Quiz extends Component {
   }
 
   goToResult(){
-    clearLocalNotifications().then(setLocalNotification())
+    clearLocalNotifications().then(setLocalNotification)
     this.setState((prevState) => ({result: true}))
     this.props.navigation.setOptions({ title: 'Result' })
     this.forceUpdate();
@@ -46,7 +46,7 @@ export default class Quiz extends Component {
 
   restartQuiz = () => {
     const total = this.props.route.params.questions.length
-    this.setState(() => ({n:1, result: false, score: 0}))
+    this.setState(() => ({questionAt:1, result: false, score: 0}))
     this.props.navigation.setOptions({ title: `1/${total}` })
     this.forceUpdate()
   }
@@ -56,21 +56,21 @@ export default class Quiz extends Component {
     switch (type) {
       case 'Right':
         this.setState((prevState) => ({score: prevState.score + 1}))
-        this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+        this.props.navigation.setOptions({ title: `${this.state.questionAt}/${total}` })
         this.forceUpdate();
         break;
       case 'Wrong':
-        this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+        this.props.navigation.setOptions({ title: `${this.state.questionAt}/${total}` })
         this.forceUpdate();
         break
       default:
-        this.props.navigation.setOptions({ title: `${this.state.n}/${total}` })
+        this.props.navigation.setOptions({ title: `${this.state.questionAt}/${total}` })
     }
   }
 
   render() {
     const questions = this.props.route.params.questions
-    let position = this.state.n - 1
+    let position = this.state.questionAt - 1
     const total = this.props.route.params.questions.length
     const status = this.state.score > (total/2)
 
@@ -78,13 +78,18 @@ export default class Quiz extends Component {
        
       return (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+
           <Card question={questions[position].question}
                 answer={questions[position].answer}
                 updateState={this.updateState}/>
+
         </View>
       )
-    } else {
-      return <QuizScore restartQuiz={this.restartQuiz} status={status} {...this.props} score={this.state.score}/>
-    }
+      } else {
+        return <QuizScore restartQuiz={this.restartQuiz} 
+                          status={status} 
+                          {...this.props} 
+                          score={this.state.score}/>
+      }
   }
 }

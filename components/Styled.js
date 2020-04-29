@@ -19,12 +19,12 @@ export const PrettyButton = styled.TouchableOpacity`
         padding: 15px 20px 15px;
         margin-top: 20px;
         min-width: 100%;
-        color: #FFFFFF;
+        color: #fff;
         border: none;
         border-radius: 5px;
 `
 export const ButtonLightText = styled.Text`
-        color: #FFFFFF;
+        color: #fff;
         font-size: 14px;
         text-align: center;
 `
@@ -41,7 +41,7 @@ export const CardView = styled.View`
 `
 
 export const Input = styled.TextInput`
-        background-color: #FFFFFF;
+        background-color: #fff;
         width: 100%;
         margin: 5% 0 5%;
         padding: 20px;

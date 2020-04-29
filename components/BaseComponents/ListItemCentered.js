@@ -4,12 +4,18 @@ import { blue, gray, black } from '../../utils/colors'
 import { TitleText } from '../Styled'
 
 export default function ListItemCentered({name, amount, onPress, style={}}){
+
     return (
+
         <TouchableOpacity onPress={onPress} style={styles.listItemCentered}>
+
             <TitleText>{name}</TitleText>
+            
             <Text>{amount === 1 ? `${amount} card` : `${amount} cards` }</Text>
+
         </TouchableOpacity>
     )
+
 }
 
 const styles = StyleSheet.create({

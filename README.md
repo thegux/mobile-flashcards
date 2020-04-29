@@ -19,7 +19,7 @@ The second route is the New Deck component, which allows the user to create new 
 
 By creating a deck, you are redirected to a Deck component. This component allows the user to create new questions (cards), to start a quiz if the deck has questions and to delete the deck.
 
-The Card component is responsible for displaying the question, or the answer if the user requests it. It goes inside of the Quiz Component which is responsible for handling the users's responses, and to display then at the end of the quiz with a score using the Quiz Score Component.
+The Card component is responsible for displaying the question, or the answer if the user requests it. It goes inside of the Quiz Component which is responsible for handling the users' responses, and to display then at the end of the quiz with a score using the Quiz Score Component.
 
 The code also has a Fallback component which tells the user to restart the app in case something happens. This was created in order to prevent warnings with Error Boundaries in React.
 

@@ -26,6 +26,8 @@ The code also has a Fallback component which tells the user to restart the app i
 Notification code can be found in helpers.js.
 AsyncStorage logic can be found in api.js
 
+The app was tested both in Android and iOS devices.
+
 ## Image References
 
 Drawables were collected from unDraw.
